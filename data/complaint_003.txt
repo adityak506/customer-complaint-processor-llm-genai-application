@@ -1,0 +1,6 @@
+Customer: Priya Nair
+Contact: priya.nair92@example.org
+Phone: Not provided
+
+Message:
+Hello team, I am not filing a complaint—just wanted to ask if your SmartHome Hub v3 is compatible with Matter-over-Thread devices out of the box, or if a firmware update is required. Thanks in advance!

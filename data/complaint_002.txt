@@ -1,0 +1,6 @@
+From: Marcus Vance (m.vance@techcorp.io | 555-019-3340)
+Subject: URGENT - Enterprise API Outage & Data Loss
+
+Our production environment has been unable to authenticate against your v2 Payment Gateway API for the past 6 hours. Every request returns a 503 Service Unavailable error. We are losing thousands of dollars per hour. Tier-1 support told us to clear our cache, which did not resolve anything. We demand immediate escalation to Senior Engineering and an SLA credit review.
+
+Supporting Documents: Full server error logs and HAR network traces attached.

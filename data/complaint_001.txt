@@ -1,0 +1,12 @@
+Customer Name: Sarah Jenkins
+Email: sarah.jenkins@example.com
+Phone: +1-555-014-8821
+Date: October 12, 2026
+Product/Service: CloudSync Pro Subscription
+
+Issue Details:
+I was double-charged $49.99 on October 10th for my monthly CloudSync Pro plan. I contacted live chat yesterday, and Agent Mike confirmed the duplicate transaction and initiated a refund for one of the charges, which is currently pending.
+
+Supporting Information:
+Attached bank statement screenshot showing two identical charges (Transaction IDs #99481 and #99482).
+Escalation Info: No escalation needed as the refund has already been processed.

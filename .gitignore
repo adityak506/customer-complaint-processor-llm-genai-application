@@ -1,0 +1,99 @@
+# ======================
+# Python
+# ======================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+*.pyc
+*.pyo
+
+# ======================
+# Virtual Environments
+# ======================
+adityaenv/
+venv/
+env/
+.venv/
+ENV/
+.env_backup
+
+# ======================
+# Environment & Secrets
+# ======================
+.env
+*.env
+!.env.example
+
+# ======================
+# Output / Generated Files
+# ======================
+output/
+
+# ======================
+# Logs
+# ======================
+*.log
+logs/
+observability.log
+
+# ======================
+# OS Files
+# ======================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ======================
+# IDE / Editor
+# ======================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# ======================
+# Jupyter Notebooks
+# ======================
+.ipynb_checkpoints/
+*.ipynb
+
+# ======================
+# Testing & Coverage
+# ======================
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+coverage.xml
+*.cover
+
+# ======================
+# Misc
+# ======================
+*.tmp
+*.bak
+*.orig
