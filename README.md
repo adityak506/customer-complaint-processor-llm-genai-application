@@ -1,6 +1,10 @@
 # 🤖 Customer Complaint Processor — LLM Application
 
-An end-to-end **LangChain + OpenAI** batch pipeline that automatically ingests customer complaint documents, extracts structured data, generates professional response emails, and produces internal management case summaries — all in a single run.
+An end-to-end **LangChain + OpenAI** pipeline that automatically ingests customer complaint documents, extracts structured data, generates professional response emails, and produces internal management case summaries.
+
+Supports two modes:
+- **CLI batch** — `python main.py` processes all files in `data/` at once
+- **FastAPI** — `uvicorn api:app` exposes REST endpoints for single-file and batch processing with a live Swagger UI
 
 ---
 
@@ -12,6 +16,7 @@ An end-to-end **LangChain + OpenAI** batch pipeline that automatically ingests c
 - 📋 **Management case summaries** — concise Markdown reports for internal teams
 - ⚡ **Parallel LLM calls** — email and summary generation run concurrently via `RunnableParallel`
 - 📊 **Consolidated CSV report** — all cases aggregated into a single `final_report.csv`
+- 🌐 **FastAPI REST interface** — upload files via HTTP, get results as JSON, download the report
 - 🔍 **Observability logging** — structured timestamped logs for every processing step
 
 ---
@@ -66,7 +71,8 @@ customer-complaint-processor-llm-application/
 ├── ingestion.py                 # Multi-format text extractor
 ├── schemas.py                   # Pydantic schema for structured output
 ├── workflow.py                  # LangChain Runnable pipeline
-├── main.py                      # Batch runner entry point
+├── main.py                      # CLI batch runner entry point
+├── api.py                       # FastAPI REST interface
 │
 ├── requirements.txt             # Python dependencies
 ├── .env.example                 # Environment variable template
@@ -148,8 +154,72 @@ Place your complaint files in the `data/` folder. Supported formats:
 
 ### 6. Run the Pipeline
 
+**Option A — CLI Batch Mode**
+
+Processes every file in `data/` in one go:
+
 ```bash
 python main.py
+```
+
+**Option B — FastAPI Server**
+
+Starts the REST API with live Swagger UI:
+
+```bash
+uvicorn api:app --reload
+```
+
+Then open **http://localhost:8000/docs** in your browser.
+
+---
+
+## 🌐 API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/health` | Liveness check — confirms API is up and key is set |
+| `POST` | `/process` | Upload **one** complaint file → returns full JSON result |
+| `POST` | `/process/batch` | Upload **multiple** files → returns all results + batch summary |
+| `GET` | `/results/{stem}` | Fetch saved JSON for a previously processed complaint |
+| `GET` | `/report` | Download `final_report.csv` |
+
+### Example — Single File via `curl`
+
+```bash
+curl -X POST "http://localhost:8000/process" \
+  -F "file=@data/complaint_001.txt"
+```
+
+### Example — Batch via `curl`
+
+```bash
+curl -X POST "http://localhost:8000/process/batch" \
+  -F "files=@data/complaint_001.txt" \
+  -F "files=@data/complaint_002.pdf" \
+  -F "files=@data/complaint_003.docx"
+```
+
+### Sample JSON Response (`/process`)
+
+```json
+{
+  "file_name": "complaint_001.txt",
+  "processing_time_sec": 3.42,
+  "extracted": {
+    "customer_name": "Jane Doe",
+    "email": "jane@example.com",
+    "complaint_category": "Billing",
+    "issue_description": "Overcharged on invoice #1042.",
+    "resolution_provided": "None yet",
+    "complaint": "Yes",
+    "escalation_required": "No",
+    "supporting_document_available": "Yes",
+    "overall_case_status": "Open"
+  },
+  "customer_email": "Dear Jane Doe, ...",
+  "case_summary": "## Case Overview\n..."
+}
 ```
 
 ---
@@ -189,6 +259,8 @@ supporting_document_available, overall_case_status
 | [LangChain](https://python.langchain.com/) | LLM orchestration & Runnables pipeline |
 | [OpenAI GPT-4o-mini](https://platform.openai.com/) | LLM for extraction & generation |
 | [Pydantic v2](https://docs.pydantic.dev/) | Structured output schema enforcement |
+| [FastAPI](https://fastapi.tiangolo.com/) | REST API layer with auto Swagger UI |
+| [Uvicorn](https://www.uvicorn.org/) | ASGI server for FastAPI |
 | [pypdf](https://github.com/py-pdf/pypdf) | PDF text extraction |
 | [python-docx](https://python-docx.readthedocs.io/) | Word document text extraction |
 | [pandas](https://pandas.pydata.org/) | CSV report generation |
