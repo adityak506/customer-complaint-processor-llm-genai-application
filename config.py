@@ -26,8 +26,16 @@ TEMPERATURE_EXTRACTION = 0.0
 TEMPERATURE_GENERATION = 0.2
 
 # Centralized Logging Setup
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s",
-)
+LOGS_DIR = BASE_DIR / "logs"
+LOGS_DIR.mkdir(parents=True, exist_ok=True)
+
+_formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(message)s")
+
+_file_handler = logging.FileHandler(LOGS_DIR / "project.log", encoding="utf-8")
+_file_handler.setFormatter(_formatter)
+
+_console_handler = logging.StreamHandler()
+_console_handler.setFormatter(_formatter)
+
+logging.basicConfig(level=logging.INFO, handlers=[_file_handler, _console_handler])
 logger = logging.getLogger("ComplaintProcessor")
